@@ -10,12 +10,11 @@ def key(host, id):
     'X-Scope': '8a22163c-8662-4535-9050-bc5e1923df48',
     'X-Requested-With': 'XMLHttpRequest',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36',
-    'Content-Type': 'application/json',
-    'Cookie': 'ASP.NET_SessionId=pnickrx020cskna3goqfsr5f'
+    'Content-Type': 'application/json'
     }
     conn.request("POST", "/api/encrypt/signature", payload, headers)
     res = conn.getresponse()
     data = res.read()
     myjson = json.loads(data.decode("utf-8"))
-    #print(myjson)
+    print("id: "+ myjson["data"]["signature"])
     return(myjson["data"]["signature"])
