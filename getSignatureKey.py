@@ -1,23 +1,21 @@
-import requests
+import http.client
+import mimetypes
 import json
 
-def key(ID):
-    
-    url = "https://web.skola24.se/api/encrypt/signature"
-
-    payload = "{\r\n    \"signature\": \""+ str(ID) +" \"\r\n}"
+def key(host, id):
+    conn = http.client.HTTPSConnection("web.skola24.se")
+    payload = "{\"signature\":\""+str(host)+"\"}"
     headers = {
     'Accept': 'application/json, text/javascript, */*; q=0.01',
     'X-Scope': '8a22163c-8662-4535-9050-bc5e1923df48',
     'X-Requested-With': 'XMLHttpRequest',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36',
     'Content-Type': 'application/json',
-    'Sec-Fetch-Site': 'same-origin',
-    'Sec-Fetch-Mode': 'cors',
-    'Sec-Fetch-Dest': 'empty',
-    'Cookie': 'ASP.NET_SessionId=ymxtq4psjnefu3wd0ok2ybf4'
+    'Cookie': 'ASP.NET_SessionId=pnickrx020cskna3goqfsr5f'
     }
-
-    response = requests.request("POST", url, headers=headers, data = payload).json()
-    return(response['data']['signature'])
-
+    conn.request("POST", "/api/encrypt/signature", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    myjson = json.loads(data.decode("utf-8"))
+    #print(myjson)
+    return(myjson["data"]["signature"])

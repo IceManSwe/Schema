@@ -1,20 +1,21 @@
 import getSignatureKey, getRenderKey, getSchedule, re, json
 
 
-def getSched(ID, host):
+def getSched(id, host, week, year, uGuid):
 
-    x = getSchedule.schedule(getRenderKey.renderKey(), getSignatureKey.key(ID), host)
-    #x = json.loads(x)
-    x = x["data"]["timetableJson"]
-
-    temp = json.loads(x)
-    #print(temp["textList"])
-    for item in temp["textList"]:
-        if item["text"] == '':
-            temp["textList"].remove(item)
-
-
-    return(temp["textList"])
+    x = getSchedule.schedule(getRenderKey.renderKey(host), getSignatureKey.key(host, id), uGuid ,week ,host, year)
+    print(x)
+    if(x["data"]["timetableJson"] != None):
+        #x = json.loads(x)
+        x = x["data"]["timetableJson"]
+        #print(temp["textList"])
+        for item in x["textList"]:
+            if item["text"] == '':
+                print(x)
+                x["textList"].remove(item)
 
 
-#print(getSchedule.schedule(getRenderKey.renderKey(), getKey.key(ID), host))
+        return(x["textList"])
+    else :
+        print("Error getting shed")
+        exit(1)

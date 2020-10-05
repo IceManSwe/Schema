@@ -2,10 +2,10 @@ from PIL import Image, ImageDraw, ImageFont
 import SchedParse
 
 
-def genScheduleImg(id, host, bgColor, txtColor, lnColor, imgName):
+def genScheduleImg(id, host, bgColor, txtColor, lnColor, imgName, week, year, uGuid):
     startX = 70
     incX = 239
-    sched = SchedParse.getSched(id, host)
+    sched = SchedParse.getSched(id, host, week, year, uGuid)
 
     fnt = ImageFont.truetype("arial.ttf", 15)
     img = Image.new('RGB', (1340, 550), color=bgColor)
